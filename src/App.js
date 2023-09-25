@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import './App.css'; // Archivo CSS para estilos
 
-function App() {
+export default function App() {
+  const [artworks, setArtworks] = useState([]);
+
+  useEffect(() => {
+   
+    // Llamada a la API con CORS
+    fetch('https://random-d.uk/', { mode: 'cors' })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('No se pudo obtener la data');
+        }
+        return res.json();
+      })
+      .then((data) => setArtworks(data.data))
+      .catch((error) => console.error('Error al obtener los datos:', error));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Patitos</h1>
+      <button onClick={() => window.location.reload()}>Recargar</button>
+      <ul>
+        {artworks.map((artwork) => (
+          <li key={artwork.id}>{artwork.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-export default App;
