@@ -14,7 +14,7 @@ function App() {
     axios
       .get("https://randomfox.ca/floof/")
       .then((response) => {
-        console.log("Respuesta de la API:", JSON.stringify(response, null, 2));
+        // console.log("Respuesta de la API:", JSON.stringify(response, null, 2));
         setImageUrl(response.data.image);
       })
       .catch((error) => {
